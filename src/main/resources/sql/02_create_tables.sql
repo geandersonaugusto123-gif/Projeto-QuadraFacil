@@ -67,7 +67,6 @@ CREATE TABLE agendamentos (
 
     CONSTRAINT chk_agendamentos_horario CHECK (hora_fim > hora_inicio)
 );
-
 -- Evita duplicidade exata de agendamentos ativos.
 -- A validacao completa de sobreposicao de horarios tambem e feita no DAO,
 -- pois precisa comparar intervalos parcialmente cruzados.
