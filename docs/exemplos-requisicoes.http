@@ -1,0 +1,66 @@
+@baseUrl = http://localhost:8080/AgendamentoQuadrasBackend/api
+
+### Listar usuarios
+GET {{baseUrl}}/usuarios
+
+### Cadastrar usuario
+POST {{baseUrl}}/usuarios
+Content-Type: application/json
+
+{
+  "nome": "Maria Souza",
+  "email": "maria@email.com",
+  "senha": "123456",
+  "telefone": "(11) 97777-2222"
+}
+
+### Login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "admin@quadras.com.br",
+  "senha": "admin123"
+}
+
+### Listar quadras
+GET {{baseUrl}}/quadras
+
+### Cadastrar quadra
+POST {{baseUrl}}/quadras
+Content-Type: application/json
+
+{
+  "nome": "Quadra Volei 1",
+  "tipo": "VOLEI",
+  "descricao": "Quadra coberta para jogos noturnos.",
+  "precoHora": 100.00,
+  "status": "DISPONIVEL"
+}
+
+### Criar agendamento
+POST {{baseUrl}}/agendamentos
+Content-Type: application/json
+
+{
+  "usuarioId": 1,
+  "quadraId": 1,
+  "dataAgendamento": "2026-06-01",
+  "horaInicio": "18:00",
+  "horaFim": "19:00",
+  "observacoes": "Reserva para jogo entre amigos."
+}
+
+### Horarios disponiveis
+GET {{baseUrl}}/agendamentos/disponiveis?quadraId=1&data=2026-06-01
+
+### Confirmar agendamento
+PUT {{baseUrl}}/agendamentos/1/status
+Content-Type: application/json
+
+{
+  "status": "CONFIRMADO"
+}
+
+### Cancelar agendamento
+DELETE {{baseUrl}}/agendamentos/1

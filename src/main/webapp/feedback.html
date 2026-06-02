@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback | QuadraF&aacute;cil</title>
+  <meta name="description" content="Envie comentarios e sugestoes ao criador do sistema QuadraFacil.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="feedback-page">
+  <header class="courts-topbar">
+    <a class="brand" href="index.html" aria-label="QuadraFacil inicio">
+      <span class="brand__mark" aria-hidden="true">QF</span>
+      <span class="brand__name">QuadraF&aacute;cil</span>
+    </a>
+
+    <nav class="courts-nav" aria-label="Menu principal">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="quadras.html">Quadras</a>
+      <a href="horarios-disponiveis.html">Hor&aacute;rios</a>
+      <a href="agendar.html">Novo Agendamento</a>
+      <a href="meus-agendamentos.html">Meus Agendamentos</a>
+      <a href="administracao.html" data-admin-only hidden>Administra&ccedil;&atilde;o</a>
+      <a class="is-active" href="feedback.html">Feedback</a>
+    </nav>
+  </header>
+
+  <main class="feedback-main" aria-labelledby="feedback-title">
+    <section class="booking-hero feedback-hero">
+      <div>
+        <p class="eyebrow">Contato com o criador</p>
+        <h1 id="feedback-title">Enviar feedback</h1>
+        <p>Compartilhe sugest&otilde;es, problemas encontrados ou melhorias para o QuadraF&aacute;cil.</p>
+      </div>
+      <a class="button button--secondary-soft" href="dashboard.html">Voltar ao dashboard</a>
+    </section>
+
+    <div class="dashboard-alert form-alert form-alert--success" id="feedback-success" role="status" hidden></div>
+    <div class="dashboard-alert form-alert form-alert--error" id="feedback-error" role="status" hidden></div>
+
+    <section class="feedback-contact-layout" aria-label="Formulario de feedback">
+      <form class="feedback-form-card" id="feedback-form" novalidate>
+        <div class="feedback-form-heading">
+          <p class="eyebrow">Sua mensagem</p>
+          <h2>Conte como foi sua experi&ecirc;ncia</h2>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="feedback-name">Nome</label>
+            <input type="text" id="feedback-name" name="nome" placeholder="Seu nome" required>
+            <small class="field-error" id="feedback-name-error"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="feedback-email">Email</label>
+            <input type="email" id="feedback-email" name="email" placeholder="seu@email.com" required>
+            <small class="field-error" id="feedback-email-error"></small>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="feedback-type">Tipo de feedback</label>
+            <select id="feedback-type" name="tipo" required>
+              <option value="">Selecione</option>
+              <option value="Sugestao">Sugest&atilde;o</option>
+              <option value="Problema">Problema encontrado</option>
+              <option value="Melhoria">Melhoria</option>
+              <option value="Elogio">Elogio</option>
+            </select>
+            <small class="field-error" id="feedback-type-error"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="feedback-rating">Avalia&ccedil;&atilde;o</label>
+            <select id="feedback-rating" name="avaliacao" required>
+              <option value="">Selecione</option>
+              <option value="5">5 - Excelente</option>
+              <option value="4">4 - Bom</option>
+              <option value="3">3 - Regular</option>
+              <option value="2">2 - Ruim</option>
+              <option value="1">1 - Muito ruim</option>
+            </select>
+            <small class="field-error" id="feedback-rating-error"></small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="feedback-message">Mensagem</label>
+          <textarea id="feedback-message" name="mensagem" placeholder="Descreva seu feedback com detalhes." required></textarea>
+          <small class="field-error" id="feedback-message-error"></small>
+        </div>
+
+        <div class="feedback-form-actions">
+          <button type="submit" class="button button--primary feedback-submit">
+            <span class="button-text">Enviar feedback</span>
+          </button>
+          <button type="reset" class="button button--secondary-soft">Limpar</button>
+        </div>
+      </form>
+
+      <aside class="feedback-info-card" aria-labelledby="feedback-info-title">
+        <p class="eyebrow">Destino</p>
+        <h2 id="feedback-info-title">Criador do sistema</h2>
+        <p>O envio abre seu aplicativo de email com a mensagem pronta para ser enviada ao criador do QuadraF&aacute;cil.</p>
+        <dl>
+          <div>
+            <dt>Email</dt>
+            <dd>admin@quadras.com.br</dd>
+          </div>
+          <div>
+            <dt>Conte&uacute;do enviado</dt>
+            <dd>Nome, email, tipo, avalia&ccedil;&atilde;o e mensagem.</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+  </main>
+
+  <div class="feedback-toast-region" id="feedback-toast-region" aria-live="polite" aria-label="Mensagens do sistema"></div>
+
+  <dialog class="booking-modal" id="feedback-confirmation-modal" aria-labelledby="feedback-confirmation-title">
+    <div class="booking-modal__content">
+      <div class="booking-modal__header">
+        <h2 id="feedback-confirmation-title">Confirmar a&ccedil;&atilde;o</h2>
+        <button type="button" class="modal-close" data-feedback-confirm-close aria-label="Fechar">&times;</button>
+      </div>
+      <p class="modal-question">Tem certeza que deseja continuar?</p>
+      <div class="booking-modal__actions">
+        <button type="button" class="button button--secondary-soft" data-feedback-confirm-cancel>Cancelar</button>
+        <button type="button" class="button button--primary" id="feedback-confirm-action">Confirmar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="js/visibilidade-admin.js"></script>
+  <script src="js/feedback-erros.js"></script>
+</body>
+</html>

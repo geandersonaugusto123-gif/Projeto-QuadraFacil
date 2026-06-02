@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hor&aacute;rios Dispon&iacute;veis | QuadraF&aacute;cil</title>
+  <meta name="description" content="Consulte horarios livres por quadra e data antes de reservar no QuadraFacil.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="availability-page">
+  <header class="courts-topbar">
+    <a class="brand" href="index.html" aria-label="QuadraFacil inicio">
+      <span class="brand__mark" aria-hidden="true">QF</span>
+      <span class="brand__name">QuadraF&aacute;cil</span>
+    </a>
+
+    <nav class="courts-nav" aria-label="Menu principal">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="quadras.html">Quadras</a>
+      <a class="is-active" href="horarios-disponiveis.html">Hor&aacute;rios</a>
+      <a href="agendar.html">Novo Agendamento</a>
+      <a href="meus-agendamentos.html">Meus Agendamentos</a>
+      <a href="administracao.html" data-admin-only hidden>Administra&ccedil;&atilde;o</a>
+      <a href="feedback.html">Feedback</a>
+      <button type="button" id="availability-auth-action">Entrar</button>
+    </nav>
+  </header>
+
+  <main class="availability-main" aria-labelledby="availability-page-title">
+    <section class="booking-hero availability-hero">
+      <div>
+        <p class="eyebrow">Consulta de agenda</p>
+        <h1 id="availability-page-title">Consultar hor&aacute;rios dispon&iacute;veis</h1>
+        <p>Veja os hor&aacute;rios livres antes de reservar.</p>
+      </div>
+      <a class="button button--secondary-soft" href="quadras.html">Ver quadras</a>
+    </section>
+
+    <div class="dashboard-alert form-alert form-alert--success" id="availability-success" role="status" hidden></div>
+    <div class="dashboard-alert form-alert form-alert--error" id="availability-error" role="status" hidden></div>
+
+    <section class="availability-query-card" aria-labelledby="availability-form-title">
+      <div class="availability-card-heading">
+        <div>
+          <p class="eyebrow">Busca</p>
+          <h2 id="availability-form-title">Quadra e data</h2>
+        </div>
+      </div>
+
+      <form class="availability-form" id="availability-query-form" novalidate>
+        <div class="form-group">
+          <label for="availability-court">Quadra</label>
+          <select id="availability-court" required>
+            <option value="">Carregando quadras...</option>
+          </select>
+          <small class="field-error" id="availability-court-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="availability-query-date">Data</label>
+          <input type="date" id="availability-query-date" required>
+          <small class="field-error" id="availability-query-date-error"></small>
+        </div>
+
+        <button type="submit" class="button button--primary availability-submit" id="consult-availability-button">
+          Consultar hor&aacute;rios
+        </button>
+      </form>
+    </section>
+
+    <section class="availability-results-card" aria-labelledby="availability-results-title">
+      <div class="availability-results-heading">
+        <div>
+          <p class="eyebrow">Resultado</p>
+          <h2 id="availability-results-title">Hor&aacute;rios do dia</h2>
+        </div>
+        <strong id="availability-results-count">Selecione uma quadra e uma data.</strong>
+      </div>
+
+      <div class="availability-legend" aria-label="Legenda dos horarios">
+        <span><i class="legend-dot legend-dot--available"></i> Livre</span>
+        <span><i class="legend-dot legend-dot--busy"></i> Indispon&iacute;vel</span>
+        <span><i class="legend-dot legend-dot--selected"></i> Selecionado</span>
+      </div>
+
+      <div class="availability-slots-grid" id="availability-slots-grid" aria-live="polite">
+        <span class="time-slot time-slot--busy">Selecione uma quadra e uma data.</span>
+      </div>
+
+      <div class="availability-actions">
+        <a class="button button--primary is-disabled" id="schedule-selected-slot" href="agendar.html" aria-disabled="true">
+          Agendar hor&aacute;rio selecionado
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/visibilidade-admin.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/horarios-disponiveis.js"></script>
+</body>
+</html>

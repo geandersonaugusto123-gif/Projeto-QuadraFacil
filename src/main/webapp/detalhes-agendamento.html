@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes do Agendamento | QuadraF&aacute;cil</title>
+  <meta name="description" content="Consulte os dados completos de uma reserva feita no QuadraFacil.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="booking-detail-page">
+  <header class="courts-topbar">
+    <a class="brand" href="index.html" aria-label="QuadraFacil inicio">
+      <span class="brand__mark" aria-hidden="true">QF</span>
+      <span class="brand__name">QuadraF&aacute;cil</span>
+    </a>
+
+    <nav class="courts-nav" aria-label="Menu principal">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="quadras.html">Quadras</a>
+      <a href="horarios-disponiveis.html">Hor&aacute;rios</a>
+      <a href="agendar.html">Novo Agendamento</a>
+      <a class="is-active" href="meus-agendamentos.html">Meus Agendamentos</a>
+      <a href="administracao.html" data-admin-only hidden>Administra&ccedil;&atilde;o</a>
+      <a href="feedback.html">Feedback</a>
+      <button type="button" id="booking-detail-auth-action">Sair</button>
+    </nav>
+  </header>
+
+  <main class="booking-detail-main" aria-labelledby="booking-detail-title">
+    <div class="dashboard-alert form-alert form-alert--success" id="booking-detail-success" role="status" hidden></div>
+    <div class="dashboard-alert form-alert form-alert--error" id="booking-detail-error" role="status" hidden></div>
+
+    <article class="booking-detail-card">
+      <div class="booking-detail-heading">
+        <div>
+          <p class="eyebrow">Reserva selecionada</p>
+          <h1 id="booking-detail-title">Detalhes do agendamento</h1>
+        </div>
+        <span class="badge booking-detail-status badge--muted" id="detail-status">CARREGANDO</span>
+      </div>
+
+      <div class="status-message status-message--muted" id="status-message">
+        Carregando informa&ccedil;&otilde;es do agendamento.
+      </div>
+
+      <section class="booking-detail-grid" aria-label="Dados completos do agendamento">
+        <dl class="detail-info-list">
+          <div>
+            <dt>ID do agendamento</dt>
+            <dd id="detail-id">--</dd>
+          </div>
+          <div>
+            <dt>Usu&aacute;rio respons&aacute;vel</dt>
+            <dd id="detail-user">--</dd>
+          </div>
+          <div>
+            <dt>Quadra</dt>
+            <dd id="detail-court">--</dd>
+          </div>
+          <div>
+            <dt>Tipo da quadra</dt>
+            <dd id="detail-court-type">--</dd>
+          </div>
+          <div>
+            <dt>Data do agendamento</dt>
+            <dd id="detail-date">--</dd>
+          </div>
+          <div>
+            <dt>Hora in&iacute;cio</dt>
+            <dd id="detail-start">--</dd>
+          </div>
+          <div>
+            <dt>Hora fim</dt>
+            <dd id="detail-end">--</dd>
+          </div>
+          <div>
+            <dt>Valor estimado</dt>
+            <dd id="detail-price">--</dd>
+          </div>
+        </dl>
+
+        <section class="detail-observations" aria-labelledby="detail-observations-title">
+          <h2 id="detail-observations-title">Observa&ccedil;&otilde;es</h2>
+          <p id="detail-notes">--</p>
+        </section>
+      </section>
+
+      <section class="timeline-panel" aria-labelledby="timeline-title">
+        <h2 id="timeline-title">Linha do tempo</h2>
+        <ol class="booking-timeline" id="booking-timeline">
+          <li class="is-current">Carregando andamento...</li>
+        </ol>
+      </section>
+
+      <div class="booking-detail-actions">
+        <a class="button button--secondary-soft" href="meus-agendamentos.html">Voltar</a>
+        <a class="button button--dark" id="edit-booking-link" href="agendar.html">Editar agendamento</a>
+        <button class="button button--danger" type="button" id="cancel-detail-booking">Cancelar agendamento</button>
+      </div>
+    </article>
+  </main>
+
+  <dialog class="booking-modal" id="cancel-detail-modal" aria-labelledby="cancel-detail-title">
+    <div class="booking-modal__content">
+      <div class="booking-modal__header">
+        <h2 id="cancel-detail-title">Cancelar agendamento</h2>
+        <button type="button" class="modal-close" data-cancel-detail-close aria-label="Fechar">&times;</button>
+      </div>
+      <p class="modal-question">Deseja realmente cancelar este agendamento?</p>
+      <div class="booking-modal__actions">
+        <button type="button" class="button button--secondary-soft" data-cancel-detail-close>Voltar</button>
+        <button type="button" class="button button--danger" id="confirm-detail-cancel">Confirmar cancelamento</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="js/visibilidade-admin.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/detalhes-agendamento.js"></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Perfil | QuadraF&aacute;cil</title>
+  <meta name="description" content="Atualize seus dados cadastrais no QuadraFacil.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="profile-page">
+  <header class="courts-topbar">
+    <a class="brand" href="index.html" aria-label="QuadraFacil inicio">
+      <span class="brand__mark" aria-hidden="true">QF</span>
+      <span class="brand__name">QuadraF&aacute;cil</span>
+    </a>
+
+    <nav class="courts-nav" aria-label="Menu principal">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="quadras.html">Quadras</a>
+      <a href="horarios-disponiveis.html">Hor&aacute;rios</a>
+      <a href="agendar.html">Novo Agendamento</a>
+      <a href="meus-agendamentos.html">Meus Agendamentos</a>
+      <a href="administracao.html" data-admin-only hidden>Administra&ccedil;&atilde;o</a>
+      <a href="feedback.html">Feedback</a>
+      <button type="button" id="profile-auth-action">Sair</button>
+    </nav>
+  </header>
+
+  <main class="profile-main" aria-labelledby="profile-title">
+    <section class="profile-hero">
+      <div>
+        <p class="eyebrow">Conta do usu&aacute;rio</p>
+        <h1 id="profile-title">Meu perfil</h1>
+        <p>Atualize suas informa&ccedil;&otilde;es de contato.</p>
+      </div>
+      <a class="button button--secondary-soft" href="dashboard.html">Voltar ao dashboard</a>
+    </section>
+
+    <div class="dashboard-alert form-alert form-alert--success" id="profile-success" role="status" hidden></div>
+    <div class="dashboard-alert form-alert form-alert--error" id="profile-error" role="status" hidden></div>
+
+    <section class="profile-layout" aria-label="Dados do perfil">
+      <article class="profile-summary-card">
+        <div class="profile-identity">
+          <span class="profile-avatar" id="profile-avatar" aria-hidden="true">QF</span>
+          <div>
+            <h2 id="profile-card-name">Carregando perfil</h2>
+            <p id="profile-card-email">--</p>
+          </div>
+        </div>
+
+        <dl class="profile-data-list">
+          <div>
+            <dt>Nome</dt>
+            <dd id="profile-view-name">--</dd>
+          </div>
+          <div>
+            <dt>Email</dt>
+            <dd id="profile-view-email">--</dd>
+          </div>
+          <div>
+            <dt>Telefone</dt>
+            <dd id="profile-view-phone">--</dd>
+          </div>
+          <div>
+            <dt>Data de cria&ccedil;&atilde;o da conta</dt>
+            <dd id="profile-view-created">--</dd>
+          </div>
+        </dl>
+      </article>
+
+      <form class="profile-form-card" id="profile-form" novalidate>
+        <div class="profile-form-heading">
+          <p class="eyebrow">Dados cadastrais</p>
+          <h2>Editar informa&ccedil;&otilde;es</h2>
+        </div>
+
+        <div class="form-group">
+          <label for="profile-nome">Nome completo</label>
+          <div class="field-control">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 21a8 8 0 0 0-16 0"></path>
+              <circle cx="12" cy="8" r="4"></circle>
+            </svg>
+            <input type="text" id="profile-nome" name="nome" autocomplete="name" placeholder="Seu nome completo" required>
+          </div>
+          <small class="field-error" id="profile-nome-error"></small>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="profile-email">Email</label>
+            <div class="field-control">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                <path d="m3 7 9 6 9-6"></path>
+              </svg>
+              <input type="email" id="profile-email" name="email" autocomplete="email" placeholder="seu@email.com" required>
+            </div>
+            <small class="field-error" id="profile-email-error"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="profile-telefone">Telefone</label>
+            <div class="field-control">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"></path>
+              </svg>
+              <input type="tel" id="profile-telefone" name="telefone" autocomplete="tel" placeholder="(11) 99999-9999">
+            </div>
+            <small class="field-error" id="profile-telefone-error"></small>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="profile-senha">Nova senha</label>
+            <div class="field-control">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+              </svg>
+              <input type="password" id="profile-senha" name="senha" autocomplete="new-password" placeholder="Opcional">
+            </div>
+            <small class="field-error" id="profile-senha-error"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="profile-confirmar-senha">Confirmar nova senha</label>
+            <div class="field-control">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <input type="password" id="profile-confirmar-senha" name="confirmarSenha" autocomplete="new-password" placeholder="Opcional">
+            </div>
+            <small class="field-error" id="profile-confirmar-senha-error"></small>
+          </div>
+        </div>
+
+        <div class="profile-actions">
+          <button class="button button--primary profile-submit" type="submit">
+            <span class="button-text">Salvar altera&ccedil;&otilde;es</span>
+          </button>
+          <a class="button button--secondary-soft" href="dashboard.html">Cancelar</a>
+          <button class="button button--danger-soft" type="button" id="delete-profile-button">Excluir conta</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <dialog class="booking-modal" id="delete-profile-modal" aria-labelledby="delete-profile-title">
+    <div class="booking-modal__content">
+      <div class="booking-modal__header">
+        <h2 id="delete-profile-title">Excluir conta</h2>
+        <button type="button" class="modal-close" data-delete-profile-close aria-label="Fechar">&times;</button>
+      </div>
+      <p class="modal-question">Tem certeza que deseja excluir sua conta? Essa a&ccedil;&atilde;o s&oacute; ser&aacute; permitida se n&atilde;o houver agendamentos vinculados.</p>
+      <div class="booking-modal__actions">
+        <button type="button" class="button button--secondary-soft" data-delete-profile-close>Voltar</button>
+        <button type="button" class="button button--danger" id="confirm-delete-profile">Excluir conta</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="js/visibilidade-admin.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/perfil.js"></script>
+</body>
+</html>

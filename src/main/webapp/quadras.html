@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quadras | QuadraF&aacute;cil</title>
+  <meta name="description" content="Consulte as quadras cadastradas no QuadraFacil e escolha uma opcao para agendar.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="courts-page">
+  <header class="courts-topbar">
+    <a class="brand" href="index.html" aria-label="QuadraFacil inicio">
+      <span class="brand__mark" aria-hidden="true">QF</span>
+      <span class="brand__name">QuadraF&aacute;cil</span>
+    </a>
+
+    <nav class="courts-nav" aria-label="Menu principal">
+      <a href="dashboard.html">Dashboard</a>
+      <a class="is-active" href="quadras.html">Quadras</a>
+      <a href="horarios-disponiveis.html">Hor&aacute;rios</a>
+      <a href="agendar.html">Novo Agendamento</a>
+      <a href="meus-agendamentos.html">Meus Agendamentos</a>
+      <a href="administracao.html" data-admin-only hidden>Administra&ccedil;&atilde;o</a>
+      <a href="feedback.html">Feedback</a>
+      <button type="button" id="courts-auth-action">Entrar</button>
+    </nav>
+  </header>
+
+  <main class="courts-main" aria-labelledby="courts-title">
+    <section class="courts-hero">
+      <div>
+        <p class="eyebrow">Escolha onde jogar</p>
+        <h1 id="courts-title">Quadras dispon&iacute;veis</h1>
+        <p>Escolha uma quadra e consulte os hor&aacute;rios livres.</p>
+      </div>
+      <a class="button button--primary" href="agendar.html">Agendar agora</a>
+    </section>
+
+    <section class="courts-filters" aria-label="Filtros de quadras">
+      <div class="form-group">
+        <label for="court-search">Buscar por nome</label>
+        <div class="field-control">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m16.5 16.5 4 4"></path>
+          </svg>
+          <input type="search" id="court-search" placeholder="Ex.: Quadra Futsal Principal">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="court-type">Tipo</label>
+        <select id="court-type">
+          <option value="">Todos os tipos</option>
+          <option value="FUTSAL">FUTSAL</option>
+          <option value="SOCIETY">SOCIETY</option>
+          <option value="BASQUETE">BASQUETE</option>
+          <option value="VOLEI">VOLEI</option>
+          <option value="TENIS">TENIS</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="court-status">Status</label>
+        <select id="court-status">
+          <option value="">Todos os status</option>
+          <option value="DISPONIVEL">DISPON&Iacute;VEL</option>
+          <option value="INDISPONIVEL">INDISPON&Iacute;VEL</option>
+          <option value="MANUTENCAO">MANUTEN&Ccedil;&Atilde;O</option>
+        </select>
+      </div>
+    </section>
+
+    <div class="dashboard-alert form-alert form-alert--error" id="courts-error" role="status" hidden></div>
+
+    <section class="courts-results-bar" aria-live="polite">
+      <strong id="courts-count">Carregando quadras...</strong>
+      <button type="button" id="clear-court-filters">Limpar filtros</button>
+    </section>
+
+    <section class="courts-grid" id="courts-grid" aria-label="Lista de quadras">
+      <article class="court-list-card is-loading">
+        <div class="court-type-visual"></div>
+        <strong>Carregando quadras...</strong>
+        <p>Buscando informa&ccedil;&otilde;es no backend.</p>
+      </article>
+    </section>
+  </main>
+
+  <script src="js/visibilidade-admin.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/quadras.js"></script>
+</body>
+</html>

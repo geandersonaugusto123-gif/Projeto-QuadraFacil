@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administra&ccedil;&atilde;o de Quadras | QuadraF&aacute;cil</title>
+  <meta name="description" content="Gerencie o cadastro de quadras esportivas do QuadraFacil.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="admin-page admin-courts-page">
+  <aside class="admin-sidebar" aria-label="Menu administrativo">
+    <a class="admin-brand" href="administracao.html" aria-label="QuadraFacil Admin">
+      <span class="admin-brand__mark" aria-hidden="true">QF</span>
+      <span>QuadraF&aacute;cil Admin</span>
+    </a>
+
+    <nav class="admin-menu">
+      <a href="administracao.html">
+        <span aria-hidden="true">D</span>
+        Dashboard
+      </a>
+      <a href="administracao-usuarios.html">
+        <span aria-hidden="true">U</span>
+        Usu&aacute;rios
+      </a>
+      <a class="is-active" href="administracao-quadras.html">
+        <span aria-hidden="true">Q</span>
+        Quadras
+      </a>
+      <a href="administracao-agendamentos.html">
+        <span aria-hidden="true">A</span>
+        Agendamentos
+      </a>
+      <a href="feedback.html">
+        <span aria-hidden="true">F</span>
+        Feedback
+      </a>
+      <button type="button" id="admin-courts-logout">
+        <span aria-hidden="true">S</span>
+        Sair
+      </button>
+    </nav>
+  </aside>
+
+  <main class="admin-main" aria-labelledby="admin-courts-title">
+    <section class="admin-hero">
+      <div>
+        <p class="eyebrow">Estrutura esportiva</p>
+        <h1 id="admin-courts-title">Gerenciar quadras</h1>
+        <p>Cadastre, edite, visualize e exclua quadras do sistema.</p>
+      </div>
+      <button class="button button--primary admin-new-court-button" type="button" id="new-court-button">Nova quadra</button>
+    </section>
+
+    <div class="dashboard-alert form-alert form-alert--success" id="admin-courts-success" role="status" hidden></div>
+    <div class="dashboard-alert form-alert form-alert--error" id="admin-courts-error" role="status" hidden></div>
+
+    <section class="admin-data-section admin-courts-manager" aria-labelledby="courts-table-title">
+      <div class="admin-section-heading">
+        <div>
+          <p class="eyebrow">Cadastro</p>
+          <h2 id="courts-table-title">Quadras cadastradas</h2>
+        </div>
+        <span id="admin-courts-list-count">Carregando...</span>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table admin-courts-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Tipo</th>
+              <th>Pre&ccedil;o por hora</th>
+              <th>Status</th>
+              <th>A&ccedil;&otilde;es</th>
+            </tr>
+          </thead>
+          <tbody id="admin-courts-manager-table">
+            <tr><td colspan="6">Carregando quadras...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="booking-modal admin-form-modal" id="court-form-modal" aria-labelledby="court-form-title">
+    <form class="booking-modal__content admin-court-form" id="court-form" novalidate>
+      <div class="booking-modal__header">
+        <h2 id="court-form-title">Nova quadra</h2>
+        <button type="button" class="modal-close" data-court-form-close aria-label="Fechar">&times;</button>
+      </div>
+
+      <input type="hidden" id="court-id">
+
+      <div class="form-group">
+        <label for="court-name">Nome da quadra</label>
+        <input type="text" id="court-name" name="nome" placeholder="Ex.: Quadra Futsal Principal" required>
+        <small class="field-error" id="court-name-error"></small>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="court-type">Tipo</label>
+          <select id="court-type" name="tipo" required>
+            <option value="">Selecione</option>
+            <option value="FUTSAL">FUTSAL</option>
+            <option value="SOCIETY">SOCIETY</option>
+            <option value="BASQUETE">BASQUETE</option>
+            <option value="VOLEI">VOLEI</option>
+            <option value="TENIS">TENIS</option>
+          </select>
+          <small class="field-error" id="court-type-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="court-status">Status</label>
+          <select id="court-status" name="status" required>
+            <option value="DISPONIVEL">DISPONIVEL</option>
+            <option value="INDISPONIVEL">INDISPONIVEL</option>
+            <option value="MANUTENCAO">MANUTENCAO</option>
+          </select>
+          <small class="field-error" id="court-status-error"></small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="court-price">Pre&ccedil;o por hora</label>
+        <input type="number" id="court-price" name="precoHora" min="0.01" step="0.01" placeholder="120.00" required>
+        <small class="field-error" id="court-price-error"></small>
+      </div>
+
+      <div class="form-group">
+        <label for="court-description">Descri&ccedil;&atilde;o</label>
+        <textarea id="court-description" name="descricao" placeholder="Descreva estrutura, piso, cobertura e observa&ccedil;&otilde;es importantes."></textarea>
+        <small class="field-error" id="court-description-error"></small>
+      </div>
+
+      <div class="booking-modal__actions admin-court-form-actions">
+        <button type="button" class="button button--secondary-soft" data-court-form-close>Cancelar</button>
+        <button type="submit" class="button button--primary admin-court-submit">
+          <span class="button-text">Salvar quadra</span>
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="booking-modal" id="court-view-modal" aria-labelledby="court-view-title">
+    <div class="booking-modal__content">
+      <div class="booking-modal__header">
+        <h2 id="court-view-title">Detalhes da quadra</h2>
+        <button type="button" class="modal-close" data-court-view-close aria-label="Fechar">&times;</button>
+      </div>
+      <dl class="modal-details" id="court-view-content"></dl>
+      <div class="booking-modal__actions">
+        <button type="button" class="button button--secondary-soft" data-court-view-close>Fechar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="booking-modal" id="court-delete-modal" aria-labelledby="court-delete-title">
+    <div class="booking-modal__content">
+      <div class="booking-modal__header">
+        <h2 id="court-delete-title">Excluir quadra</h2>
+        <button type="button" class="modal-close" data-court-delete-close aria-label="Fechar">&times;</button>
+      </div>
+      <p class="modal-question">Deseja realmente excluir esta quadra? A exclus&atilde;o n&atilde;o ser&aacute; permitida se houver agendamentos vinculados.</p>
+      <div class="booking-modal__actions">
+        <button type="button" class="button button--secondary-soft" data-court-delete-close>Voltar</button>
+        <button type="button" class="button button--danger" id="confirm-delete-court">Excluir quadra</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="js/api.js"></script>
+  <script src="js/admin-quadras.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meus Agendamentos | QuadraF&aacute;cil</title>
+  <meta name="description" content="Acompanhe suas reservas realizadas no QuadraFacil.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="my-bookings-page">
+  <header class="courts-topbar">
+    <a class="brand" href="index.html" aria-label="QuadraFacil inicio">
+      <span class="brand__mark" aria-hidden="true">QF</span>
+      <span class="brand__name">QuadraF&aacute;cil</span>
+    </a>
+
+    <nav class="courts-nav" aria-label="Menu principal">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="quadras.html">Quadras</a>
+      <a href="horarios-disponiveis.html">Hor&aacute;rios</a>
+      <a href="agendar.html">Novo Agendamento</a>
+      <a class="is-active" href="meus-agendamentos.html">Meus Agendamentos</a>
+      <a href="administracao.html" data-admin-only hidden>Administra&ccedil;&atilde;o</a>
+      <a href="feedback.html">Feedback</a>
+      <button type="button" id="my-bookings-auth-action">Sair</button>
+    </nav>
+  </header>
+
+  <main class="my-bookings-main" aria-labelledby="my-bookings-title">
+    <section class="booking-hero">
+      <div>
+        <p class="eyebrow">Reservas do usu&aacute;rio</p>
+        <h1 id="my-bookings-title">Meus agendamentos</h1>
+        <p>Acompanhe suas reservas realizadas.</p>
+      </div>
+      <a class="button button--primary" href="agendar.html">Novo agendamento</a>
+    </section>
+
+    <div class="dashboard-alert form-alert form-alert--success" id="my-bookings-success" role="status" hidden></div>
+    <div class="dashboard-alert form-alert form-alert--error" id="my-bookings-error" role="status" hidden></div>
+
+    <section class="my-bookings-filters" aria-label="Filtros de agendamentos">
+      <div class="form-group">
+        <label for="booking-status-filter">Status</label>
+        <select id="booking-status-filter">
+          <option value="">Todos</option>
+          <option value="PENDENTE">PENDENTE</option>
+          <option value="CONFIRMADO">CONFIRMADO</option>
+          <option value="CANCELADO">CANCELADO</option>
+          <option value="FINALIZADO">FINALIZADO</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="booking-date-filter">Data</label>
+        <input type="date" id="booking-date-filter">
+      </div>
+
+      <div class="form-group">
+        <label for="booking-search-filter">Buscar por quadra</label>
+        <div class="field-control">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m16.5 16.5 4 4"></path>
+          </svg>
+          <input type="search" id="booking-search-filter" placeholder="Ex.: Quadra Futsal Principal">
+        </div>
+      </div>
+    </section>
+
+    <section class="courts-results-bar" aria-live="polite">
+      <strong id="my-bookings-count">Carregando agendamentos...</strong>
+      <button type="button" id="clear-booking-filters">Limpar filtros</button>
+    </section>
+
+    <section class="my-bookings-grid" id="my-bookings-grid" aria-label="Lista de agendamentos">
+      <article class="booking-card is-loading">
+        <strong>Carregando reservas...</strong>
+        <p>Buscando seus agendamentos no backend.</p>
+      </article>
+    </section>
+  </main>
+
+  <dialog class="booking-modal" id="booking-details-modal" aria-labelledby="booking-details-title">
+    <div class="booking-modal__content">
+      <div class="booking-modal__header">
+        <h2 id="booking-details-title">Detalhes do agendamento</h2>
+        <button type="button" class="modal-close" data-close-modal aria-label="Fechar">&times;</button>
+      </div>
+      <dl class="modal-details" id="booking-details-content"></dl>
+      <div class="booking-modal__actions">
+        <button type="button" class="button button--secondary-soft" data-close-modal>Fechar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="booking-modal" id="cancel-booking-modal" aria-labelledby="cancel-booking-title">
+    <div class="booking-modal__content">
+      <div class="booking-modal__header">
+        <h2 id="cancel-booking-title">Cancelar agendamento</h2>
+        <button type="button" class="modal-close" data-cancel-close aria-label="Fechar">&times;</button>
+      </div>
+      <p class="modal-question">Deseja realmente cancelar este agendamento?</p>
+      <div class="booking-modal__actions">
+        <button type="button" class="button button--secondary-soft" data-cancel-close>Voltar</button>
+        <button type="button" class="button button--danger" id="confirm-cancel-booking">Confirmar cancelamento</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="js/visibilidade-admin.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/meus-agendamentos.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes da Quadra | QuadraF&aacute;cil</title>
+  <meta name="description" content="Veja detalhes da quadra selecionada e consulte horarios disponiveis para agendamento.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="court-detail-page">
+  <header class="courts-topbar">
+    <a class="brand" href="index.html" aria-label="QuadraFacil inicio">
+      <span class="brand__mark" aria-hidden="true">QF</span>
+      <span class="brand__name">QuadraF&aacute;cil</span>
+    </a>
+
+    <nav class="courts-nav" aria-label="Menu principal">
+      <a href="dashboard.html">Dashboard</a>
+      <a class="is-active" href="quadras.html">Quadras</a>
+      <a href="horarios-disponiveis.html">Hor&aacute;rios</a>
+      <a href="agendar.html">Novo Agendamento</a>
+      <a href="meus-agendamentos.html">Meus Agendamentos</a>
+      <a href="administracao.html" data-admin-only hidden>Administra&ccedil;&atilde;o</a>
+      <a href="feedback.html">Feedback</a>
+      <button type="button" id="detail-auth-action">Entrar</button>
+    </nav>
+  </header>
+
+  <main class="court-detail-main" aria-labelledby="court-name">
+    <div class="dashboard-alert form-alert form-alert--error" id="court-detail-error" role="status" hidden></div>
+
+    <section class="court-detail-layout">
+      <div class="court-detail-visual" id="court-visual" aria-hidden="true">
+        <div class="court-detail-visual__mark" id="court-type-mark">QD</div>
+        <div class="court-detail-visual__lines">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <article class="court-info-card">
+        <p class="eyebrow">Detalhes da quadra</p>
+        <div class="court-info-card__title">
+          <h1 id="court-name">Carregando quadra...</h1>
+          <span class="badge badge--muted" id="court-status">STATUS</span>
+        </div>
+
+        <dl class="court-info-list">
+          <div>
+            <dt>Tipo</dt>
+            <dd id="court-type">--</dd>
+          </div>
+          <div>
+            <dt>Pre&ccedil;o por hora</dt>
+            <dd id="court-price">--</dd>
+          </div>
+          <div>
+            <dt>Hor&aacute;rio de funcionamento</dt>
+            <dd>08:00 &agrave;s 22:00</dd>
+          </div>
+        </dl>
+
+        <p class="court-description" id="court-description">Buscando informa&ccedil;&otilde;es no backend.</p>
+
+        <section class="rules-panel" aria-labelledby="rules-title">
+          <h2 id="rules-title">Regras r&aacute;pidas</h2>
+          <ul>
+            <li>N&atilde;o &eacute; permitido agendar em datas passadas.</li>
+            <li>A hora final deve ser maior que a hora inicial.</li>
+            <li>Quadras em manuten&ccedil;&atilde;o n&atilde;o aceitam reservas.</li>
+          </ul>
+        </section>
+
+        <div class="court-detail-actions">
+          <a class="button button--primary" id="schedule-court-link" href="agendar.html">Agendar esta quadra</a>
+          <a class="button button--secondary-soft" href="quadras.html">Voltar para quadras</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="availability-panel" aria-labelledby="availability-title">
+      <div class="availability-heading">
+        <div>
+          <p class="eyebrow">Consulta por data</p>
+          <h2 id="availability-title">Hor&aacute;rios dispon&iacute;veis</h2>
+        </div>
+
+        <div class="form-group">
+          <label for="availability-date">Data</label>
+          <input type="date" id="availability-date">
+        </div>
+      </div>
+
+      <div class="availability-legend" aria-label="Legenda dos horarios">
+        <span><i class="legend-dot legend-dot--available"></i> Livre</span>
+        <span><i class="legend-dot legend-dot--busy"></i> Ocupado ou indispon&iacute;vel</span>
+      </div>
+
+      <div class="time-slots-grid" id="time-slots-grid" aria-live="polite">
+        <span class="time-slot time-slot--busy">Carregando hor&aacute;rios...</span>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/visibilidade-admin.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/detalhes-quadra.js"></script>
+</body>
+</html>

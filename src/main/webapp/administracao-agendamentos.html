@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administra&ccedil;&atilde;o de Agendamentos | QuadraF&aacute;cil</title>
+  <meta name="description" content="Gerencie reservas, filtros e status dos agendamentos do QuadraFacil.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="admin-page admin-bookings-page">
+  <aside class="admin-sidebar" aria-label="Menu administrativo">
+    <a class="admin-brand" href="administracao.html" aria-label="QuadraFacil Admin">
+      <span class="admin-brand__mark" aria-hidden="true">QF</span>
+      <span>QuadraF&aacute;cil Admin</span>
+    </a>
+
+    <nav class="admin-menu">
+      <a href="administracao.html">
+        <span aria-hidden="true">D</span>
+        Dashboard
+      </a>
+      <a href="administracao-usuarios.html">
+        <span aria-hidden="true">U</span>
+        Usu&aacute;rios
+      </a>
+      <a href="administracao-quadras.html">
+        <span aria-hidden="true">Q</span>
+        Quadras
+      </a>
+      <a class="is-active" href="administracao-agendamentos.html">
+        <span aria-hidden="true">A</span>
+        Agendamentos
+      </a>
+      <a href="feedback.html">
+        <span aria-hidden="true">F</span>
+        Feedback
+      </a>
+      <button type="button" id="admin-bookings-logout">
+        <span aria-hidden="true">S</span>
+        Sair
+      </button>
+    </nav>
+  </aside>
+
+  <main class="admin-main" aria-labelledby="admin-bookings-manager-title">
+    <section class="admin-hero">
+      <div>
+        <p class="eyebrow">Reservas do sistema</p>
+        <h1 id="admin-bookings-manager-title">Gerenciar agendamentos</h1>
+        <p>Controle todas as reservas do sistema.</p>
+      </div>
+      <a class="button button--secondary-soft" href="administracao.html">Voltar ao painel</a>
+    </section>
+
+    <div class="dashboard-alert form-alert form-alert--success" id="admin-bookings-success" role="status" hidden></div>
+    <div class="dashboard-alert form-alert form-alert--error" id="admin-bookings-error" role="status" hidden></div>
+
+    <section class="admin-data-section admin-bookings-manager" aria-labelledby="bookings-table-title">
+      <div class="admin-section-heading">
+        <div>
+          <p class="eyebrow">Consulta</p>
+          <h2 id="bookings-table-title">Agendamentos cadastrados</h2>
+        </div>
+        <span id="admin-bookings-list-count">Carregando...</span>
+      </div>
+
+      <form class="admin-manager-toolbar admin-bookings-toolbar" id="admin-bookings-filters" aria-label="Filtros de agendamentos">
+        <div class="form-group">
+          <label for="booking-user-filter">Usu&aacute;rio</label>
+          <select id="booking-user-filter">
+            <option value="">Todos os usu&aacute;rios</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="booking-court-filter">Quadra</label>
+          <select id="booking-court-filter">
+            <option value="">Todas as quadras</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="booking-admin-date-filter">Data</label>
+          <input type="date" id="booking-admin-date-filter">
+        </div>
+
+        <div class="form-group">
+          <label for="booking-admin-status-filter">Status</label>
+          <select id="booking-admin-status-filter">
+            <option value="">Todos</option>
+            <option value="PENDENTE">PENDENTE</option>
+            <option value="CONFIRMADO">CONFIRMADO</option>
+            <option value="CANCELADO">CANCELADO</option>
+            <option value="FINALIZADO">FINALIZADO</option>
+          </select>
+        </div>
+
+        <div class="admin-bookings-filter-actions">
+          <button type="submit" class="button button--primary">Filtrar</button>
+          <button type="button" class="button button--secondary-soft" id="clear-admin-booking-filters">Limpar</button>
+        </div>
+      </form>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table admin-bookings-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Usu&aacute;rio</th>
+              <th>Quadra</th>
+              <th>Data</th>
+              <th>Hora in&iacute;cio</th>
+              <th>Hora fim</th>
+              <th>Status</th>
+              <th>Observa&ccedil;&otilde;es</th>
+              <th>A&ccedil;&otilde;es</th>
+            </tr>
+          </thead>
+          <tbody id="admin-bookings-manager-table">
+            <tr><td colspan="9">Carregando agendamentos...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="booking-modal" id="admin-booking-details-modal" aria-labelledby="admin-booking-details-title">
+    <div class="booking-modal__content">
+      <div class="booking-modal__header">
+        <h2 id="admin-booking-details-title">Detalhes do agendamento</h2>
+        <button type="button" class="modal-close" data-booking-details-close aria-label="Fechar">&times;</button>
+      </div>
+      <dl class="modal-details" id="admin-booking-details-content"></dl>
+      <div class="booking-modal__actions">
+        <button type="button" class="button button--secondary-soft" data-booking-details-close>Fechar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="booking-modal admin-status-modal" id="booking-status-modal" aria-labelledby="booking-status-title">
+    <form class="booking-modal__content admin-status-form" id="booking-status-form" novalidate>
+      <div class="booking-modal__header">
+        <h2 id="booking-status-title">Alterar status do agendamento</h2>
+        <button type="button" class="modal-close" data-booking-status-close aria-label="Fechar">&times;</button>
+      </div>
+
+      <div class="form-group">
+        <label for="booking-status-select">Status</label>
+        <select id="booking-status-select" required>
+          <option value="PENDENTE">PENDENTE</option>
+          <option value="CONFIRMADO">CONFIRMADO</option>
+          <option value="CANCELADO">CANCELADO</option>
+          <option value="FINALIZADO">FINALIZADO</option>
+        </select>
+        <small class="field-error" id="booking-status-select-error"></small>
+      </div>
+
+      <div class="booking-modal__actions">
+        <button type="button" class="button button--secondary-soft" data-booking-status-close>Cancelar</button>
+        <button type="submit" class="button button--primary" id="confirm-booking-status">Atualizar status</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="booking-modal admin-form-modal" id="booking-edit-modal" aria-labelledby="booking-edit-title">
+    <form class="booking-modal__content admin-booking-edit-form" id="booking-edit-form" novalidate>
+      <div class="booking-modal__header">
+        <h2 id="booking-edit-title">Editar agendamento</h2>
+        <button type="button" class="modal-close" data-booking-edit-close aria-label="Fechar">&times;</button>
+      </div>
+
+      <input type="hidden" id="booking-edit-id">
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="booking-edit-user">Usu&aacute;rio</label>
+          <select id="booking-edit-user" required></select>
+          <small class="field-error" id="booking-edit-user-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="booking-edit-court">Quadra</label>
+          <select id="booking-edit-court" required></select>
+          <small class="field-error" id="booking-edit-court-error"></small>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="booking-edit-date">Data</label>
+          <input type="date" id="booking-edit-date" required>
+          <small class="field-error" id="booking-edit-date-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="booking-edit-status">Status</label>
+          <select id="booking-edit-status" required>
+            <option value="PENDENTE">PENDENTE</option>
+            <option value="CONFIRMADO">CONFIRMADO</option>
+            <option value="CANCELADO">CANCELADO</option>
+            <option value="FINALIZADO">FINALIZADO</option>
+          </select>
+          <small class="field-error" id="booking-edit-status-error"></small>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="booking-edit-start">Hora in&iacute;cio</label>
+          <input type="time" id="booking-edit-start" min="08:00" max="21:00" step="3600" required>
+          <small class="field-error" id="booking-edit-start-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="booking-edit-end">Hora fim</label>
+          <input type="time" id="booking-edit-end" min="09:00" max="22:00" step="3600" required>
+          <small class="field-error" id="booking-edit-end-error"></small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="booking-edit-notes">Observa&ccedil;&otilde;es</label>
+        <textarea id="booking-edit-notes" placeholder="Observa&ccedil;&otilde;es da reserva"></textarea>
+      </div>
+
+      <div class="booking-modal__actions admin-booking-edit-actions">
+        <button type="button" class="button button--secondary-soft" data-booking-edit-close>Cancelar</button>
+        <button type="submit" class="button button--primary" id="save-booking-edit">Salvar altera&ccedil;&otilde;es</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="booking-modal" id="booking-delete-modal" aria-labelledby="booking-delete-title">
+    <div class="booking-modal__content">
+      <div class="booking-modal__header">
+        <h2 id="booking-delete-title">Excluir agendamento</h2>
+        <button type="button" class="modal-close" data-booking-delete-close aria-label="Fechar">&times;</button>
+      </div>
+      <p class="modal-question">Deseja realmente excluir este agendamento?</p>
+      <div class="booking-modal__actions">
+        <button type="button" class="button button--secondary-soft" data-booking-delete-close>Voltar</button>
+        <button type="button" class="button button--danger" id="confirm-booking-delete">Excluir agendamento</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="js/api.js"></script>
+  <script src="js/admin-agendamentos.js"></script>
+</body>
+</html>

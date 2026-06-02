@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novo Agendamento | QuadraF&aacute;cil</title>
+  <meta name="description" content="Crie uma nova reserva de quadra no QuadraFacil.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="booking-page">
+  <header class="courts-topbar">
+    <a class="brand" href="index.html" aria-label="QuadraFacil inicio">
+      <span class="brand__mark" aria-hidden="true">QF</span>
+      <span class="brand__name">QuadraF&aacute;cil</span>
+    </a>
+
+    <nav class="courts-nav" aria-label="Menu principal">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="quadras.html">Quadras</a>
+      <a href="horarios-disponiveis.html">Hor&aacute;rios</a>
+      <a class="is-active" href="agendar.html">Novo Agendamento</a>
+      <a href="meus-agendamentos.html">Meus Agendamentos</a>
+      <a href="administracao.html" data-admin-only hidden>Administra&ccedil;&atilde;o</a>
+      <a href="feedback.html">Feedback</a>
+      <button type="button" id="booking-auth-action">Sair</button>
+    </nav>
+  </header>
+
+  <main class="booking-main" aria-labelledby="booking-title">
+    <section class="booking-hero">
+      <div>
+        <p class="eyebrow">Reserva de quadra</p>
+        <h1 id="booking-title">Novo agendamento</h1>
+        <p>Selecione a quadra, a data e o hor&aacute;rio desejado.</p>
+      </div>
+      <a class="button button--secondary-soft" id="booking-back-link" href="quadras.html">Cancelar</a>
+    </section>
+
+    <div class="dashboard-alert form-alert form-alert--error" id="booking-error" role="status" hidden></div>
+    <div class="dashboard-alert form-alert form-alert--success" id="booking-success" role="status" hidden></div>
+
+    <div class="booking-layout">
+      <form class="booking-form-card" id="booking-form" novalidate>
+        <section class="booking-step" aria-labelledby="step-court-title">
+          <div class="booking-step__header">
+            <span>1</span>
+            <div>
+              <h2 id="step-court-title">Escolha da quadra</h2>
+              <p>Selecione uma quadra dispon&iacute;vel para iniciar a reserva.</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="quadra">Quadra</label>
+            <select id="quadra" name="quadraId" required>
+              <option value="">Carregando quadras...</option>
+            </select>
+            <small class="field-error" id="quadra-error"></small>
+          </div>
+
+          <div class="selected-court-card" id="selected-court-card">
+            <strong>Nenhuma quadra selecionada.</strong>
+            <p>Ao escolher uma quadra, o tipo, pre&ccedil;o por hora e status aparecem aqui.</p>
+          </div>
+        </section>
+
+        <section class="booking-step" aria-labelledby="step-date-title">
+          <div class="booking-step__header">
+            <span>2</span>
+            <div>
+              <h2 id="step-date-title">Data</h2>
+              <p>N&atilde;o &eacute; permitido selecionar datas passadas.</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="data-agendamento">Data do agendamento</label>
+            <input type="date" id="data-agendamento" name="dataAgendamento" required>
+            <small class="field-error" id="data-agendamento-error"></small>
+          </div>
+        </section>
+
+        <section class="booking-step" aria-labelledby="step-time-title">
+          <div class="booking-step__header">
+            <span>3</span>
+            <div>
+              <h2 id="step-time-title">Hor&aacute;rio</h2>
+              <p>Hor&aacute;rio de funcionamento: 08:00 &agrave;s 22:00.</p>
+            </div>
+          </div>
+
+          <div class="booking-time-grid">
+            <div class="form-group">
+              <label for="hora-inicio">Hora in&iacute;cio</label>
+              <input type="time" id="hora-inicio" name="horaInicio" min="08:00" max="21:00" step="3600" required>
+              <small class="field-error" id="hora-inicio-error"></small>
+            </div>
+
+            <div class="form-group">
+              <label for="hora-fim">Hora fim</label>
+              <input type="time" id="hora-fim" name="horaFim" min="09:00" max="22:00" step="3600" required>
+              <small class="field-error" id="hora-fim-error"></small>
+            </div>
+          </div>
+
+          <button class="button button--dark check-slots-button" type="button" id="check-slots-button">Verificar hor&aacute;rios dispon&iacute;veis</button>
+
+          <div class="booking-slots" id="booking-slots" aria-live="polite">
+            <span class="time-slot time-slot--busy">Selecione uma quadra e uma data para consultar.</span>
+          </div>
+        </section>
+
+        <section class="booking-step" aria-labelledby="step-notes-title">
+          <div class="booking-step__header">
+            <span>4</span>
+            <div>
+              <h2 id="step-notes-title">Observa&ccedil;&otilde;es</h2>
+              <p>Informe detalhes opcionais da reserva.</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="observacoes">Observa&ccedil;&otilde;es da reserva</label>
+            <textarea id="observacoes" name="observacoes" rows="4" placeholder="Ex.: reserva para jogo entre amigos."></textarea>
+          </div>
+        </section>
+
+        <div class="booking-actions">
+          <button class="button button--primary booking-submit" type="submit">
+            <span class="button-text">Confirmar agendamento</span>
+          </button>
+          <a class="button button--secondary-soft" href="quadras.html">Cancelar</a>
+        </div>
+      </form>
+
+      <aside class="booking-summary" aria-labelledby="booking-summary-title">
+        <p class="eyebrow">Resumo</p>
+        <h2 id="booking-summary-title">Detalhes da reserva</h2>
+
+        <dl>
+          <div>
+            <dt>Quadra selecionada</dt>
+            <dd id="summary-court">--</dd>
+          </div>
+          <div>
+            <dt>Data</dt>
+            <dd id="summary-date">--</dd>
+          </div>
+          <div>
+            <dt>Hor&aacute;rio</dt>
+            <dd id="summary-time">--</dd>
+          </div>
+          <div>
+            <dt>Dura&ccedil;&atilde;o</dt>
+            <dd id="summary-duration">--</dd>
+          </div>
+          <div>
+            <dt>Valor estimado</dt>
+            <dd id="summary-price">--</dd>
+          </div>
+          <div>
+            <dt>Status inicial</dt>
+            <dd><span class="badge badge--pendente">PENDENTE</span></dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </main>
+
+  <script src="js/visibilidade-admin.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/agendar.js"></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | QuadraF&aacute;cil</title>
+  <meta name="description" content="Painel principal do QuadraFacil com resumo de agendamentos, quadras e atalhos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="app-page">
+  <header class="app-topbar">
+    <a class="brand" href="dashboard.html" aria-label="QuadraFacil dashboard">
+      <span class="brand__mark" aria-hidden="true">QF</span>
+      <span class="brand__name">QuadraF&aacute;cil</span>
+    </a>
+
+    <div class="topbar-user">
+      <span class="topbar-user__label">Usu&aacute;rio logado</span>
+      <strong id="topbar-user-name">Carregando...</strong>
+    </div>
+  </header>
+
+  <div class="app-layout">
+    <aside class="app-sidebar" aria-label="Menu do sistema">
+      <nav class="app-menu">
+        <a class="is-active" href="dashboard.html">
+          <span aria-hidden="true">D</span>
+          Dashboard
+        </a>
+        <a href="quadras.html">
+          <span aria-hidden="true">Q</span>
+          Quadras
+        </a>
+        <a href="horarios-disponiveis.html">
+          <span aria-hidden="true">H</span>
+          Hor&aacute;rios
+        </a>
+        <a href="agendar.html">
+          <span aria-hidden="true">N</span>
+          Novo Agendamento
+        </a>
+        <a href="meus-agendamentos.html">
+          <span aria-hidden="true">M</span>
+          Meus Agendamentos
+        </a>
+        <a href="feedback.html">
+          <span aria-hidden="true">F</span>
+          Feedback
+        </a>
+        <a href="administracao.html" data-admin-only hidden>
+          <span aria-hidden="true">A</span>
+          Administra&ccedil;&atilde;o
+        </a>
+        <button type="button" id="logout-button">
+          <span aria-hidden="true">S</span>
+          Sair
+        </button>
+      </nav>
+    </aside>
+
+    <main class="dashboard-main" aria-labelledby="dashboard-title">
+      <section class="dashboard-hero">
+        <div>
+          <p class="eyebrow">Painel principal</p>
+          <h1 id="dashboard-title">Ol&aacute;, Jo&atilde;o! O que deseja fazer hoje?</h1>
+        </div>
+        <a class="button button--primary" href="agendar.html">Novo agendamento</a>
+      </section>
+
+      <div class="dashboard-alert form-alert form-alert--error" id="dashboard-error" role="status" hidden></div>
+
+      <section class="summary-grid" aria-label="Resumo geral">
+        <article class="summary-card">
+          <span class="summary-card__label">Agendamentos ativos</span>
+          <strong id="active-bookings-count">--</strong>
+          <p>Reservas em andamento ou aguardando confirma&ccedil;&atilde;o.</p>
+        </article>
+
+        <article class="summary-card">
+          <span class="summary-card__label">Pr&oacute;ximo hor&aacute;rio reservado</span>
+          <strong id="next-booking-time">--</strong>
+          <p id="next-booking-date">Nenhum hor&aacute;rio encontrado.</p>
+        </article>
+
+        <article class="summary-card">
+          <span class="summary-card__label">Quadras dispon&iacute;veis</span>
+          <strong id="available-courts-count">--</strong>
+          <p>Op&ccedil;&otilde;es liberadas para novos agendamentos.</p>
+        </article>
+
+        <article class="summary-card">
+          <span class="summary-card__label">Reservas pendentes</span>
+          <strong id="pending-bookings-count">--</strong>
+          <p>Aguardando confirma&ccedil;&atilde;o administrativa.</p>
+        </article>
+      </section>
+
+      <section class="quick-actions" aria-labelledby="quick-actions-title">
+        <div class="section-heading dashboard-heading">
+          <p class="eyebrow">A&ccedil;&otilde;es r&aacute;pidas</p>
+          <h2 id="quick-actions-title">Escolha o pr&oacute;ximo passo</h2>
+        </div>
+
+        <div class="action-grid">
+          <a class="action-card" href="agendar.html">
+            <span class="action-card__icon" aria-hidden="true">+</span>
+            <strong>Agendar uma quadra</strong>
+            <small>Escolha data, hor&aacute;rio e modalidade.</small>
+          </a>
+          <a class="action-card" href="meus-agendamentos.html">
+            <span class="action-card__icon" aria-hidden="true">R</span>
+            <strong>Ver minhas reservas</strong>
+            <small>Acompanhe seus agendamentos.</small>
+          </a>
+          <a class="action-card" href="quadras.html">
+            <span class="action-card__icon" aria-hidden="true">Q</span>
+            <strong>Explorar quadras</strong>
+            <small>Veja modalidades e valores.</small>
+          </a>
+          <a class="action-card" href="horarios-disponiveis.html">
+            <span class="action-card__icon" aria-hidden="true">H</span>
+            <strong>Consultar hor&aacute;rios</strong>
+            <small>Veja per&iacute;odos livres por data.</small>
+          </a>
+          <a class="action-card" href="perfil.html">
+            <span class="action-card__icon" aria-hidden="true">P</span>
+            <strong>Atualizar perfil</strong>
+            <small>Mantenha seus dados em dia.</small>
+          </a>
+        </div>
+      </section>
+
+      <section class="dashboard-columns">
+        <article class="next-booking-panel" aria-labelledby="next-booking-title">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Pr&oacute;ximo agendamento</p>
+              <h2 id="next-booking-title">Sua pr&oacute;xima reserva</h2>
+            </div>
+            <span class="badge badge--muted" id="next-booking-status">SEM RESERVA</span>
+          </div>
+
+          <dl class="booking-details">
+            <div>
+              <dt>Quadra</dt>
+              <dd id="next-booking-court">Nenhuma reserva ativa.</dd>
+            </div>
+            <div>
+              <dt>Data</dt>
+              <dd id="next-booking-full-date">--</dd>
+            </div>
+            <div>
+              <dt>Hora</dt>
+              <dd id="next-booking-full-time">--</dd>
+            </div>
+          </dl>
+
+          <a class="button button--secondary-soft" id="next-booking-link" href="meus-agendamentos.html">Ver detalhes</a>
+        </article>
+
+        <section class="featured-courts" aria-labelledby="featured-courts-title">
+          <div class="section-heading dashboard-heading">
+            <p class="eyebrow">Quadras em destaque</p>
+            <h2 id="featured-courts-title">Escolha onde jogar</h2>
+          </div>
+
+          <div class="featured-courts-grid" id="featured-courts-grid">
+            <article class="court-card is-loading">
+              <strong>Carregando quadras...</strong>
+              <p>Buscando dados da API.</p>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/visibilidade-admin.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

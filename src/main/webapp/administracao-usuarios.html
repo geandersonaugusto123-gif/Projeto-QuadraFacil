@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administra&ccedil;&atilde;o de Usu&aacute;rios | QuadraF&aacute;cil</title>
+  <meta name="description" content="Gerencie o cadastro de usuarios do QuadraFacil.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="admin-page admin-users-page">
+  <aside class="admin-sidebar" aria-label="Menu administrativo">
+    <a class="admin-brand" href="administracao.html" aria-label="QuadraFacil Admin">
+      <span class="admin-brand__mark" aria-hidden="true">QF</span>
+      <span>QuadraF&aacute;cil Admin</span>
+    </a>
+
+    <nav class="admin-menu">
+      <a href="administracao.html">
+        <span aria-hidden="true">D</span>
+        Dashboard
+      </a>
+      <a class="is-active" href="administracao-usuarios.html">
+        <span aria-hidden="true">U</span>
+        Usu&aacute;rios
+      </a>
+      <a href="administracao-quadras.html">
+        <span aria-hidden="true">Q</span>
+        Quadras
+      </a>
+      <a href="administracao-agendamentos.html">
+        <span aria-hidden="true">A</span>
+        Agendamentos
+      </a>
+      <a href="feedback.html">
+        <span aria-hidden="true">F</span>
+        Feedback
+      </a>
+      <button type="button" id="admin-users-logout">
+        <span aria-hidden="true">S</span>
+        Sair
+      </button>
+    </nav>
+  </aside>
+
+  <main class="admin-main" aria-labelledby="admin-users-title">
+    <section class="admin-hero">
+      <div>
+        <p class="eyebrow">Contas cadastradas</p>
+        <h1 id="admin-users-title">Gerenciar usu&aacute;rios</h1>
+        <p>Visualize, cadastre, edite e exclua usu&aacute;rios do sistema.</p>
+      </div>
+      <button class="button button--primary admin-new-user-button" type="button" id="new-user-button">Novo usu&aacute;rio</button>
+    </section>
+
+    <div class="dashboard-alert form-alert form-alert--success" id="admin-users-success" role="status" hidden></div>
+    <div class="dashboard-alert form-alert form-alert--error" id="admin-users-error" role="status" hidden></div>
+
+    <section class="admin-data-section admin-users-manager" aria-labelledby="users-table-title">
+      <div class="admin-section-heading">
+        <div>
+          <p class="eyebrow">Cadastro</p>
+          <h2 id="users-table-title">Usu&aacute;rios cadastrados</h2>
+        </div>
+        <span id="admin-users-list-count">Carregando...</span>
+      </div>
+
+      <div class="admin-manager-toolbar" aria-label="Filtros de usu&aacute;rios">
+        <div class="form-group">
+          <label for="user-search">Buscar por nome ou email</label>
+          <input type="search" id="user-search" placeholder="Ex.: joao@email.com">
+        </div>
+        <div class="form-group">
+          <label for="user-created-filter">Data de cria&ccedil;&atilde;o</label>
+          <input type="date" id="user-created-filter">
+        </div>
+        <button type="button" class="button button--secondary-soft admin-clear-filter" id="clear-user-filters">Limpar filtros</button>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table admin-users-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Telefone</th>
+              <th>Data de cria&ccedil;&atilde;o</th>
+              <th>A&ccedil;&otilde;es</th>
+            </tr>
+          </thead>
+          <tbody id="admin-users-manager-table">
+            <tr><td colspan="6">Carregando usu&aacute;rios...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="booking-modal admin-form-modal" id="user-form-modal" aria-labelledby="user-form-title">
+    <form class="booking-modal__content admin-user-form" id="user-form" novalidate>
+      <div class="booking-modal__header">
+        <h2 id="user-form-title">Novo usu&aacute;rio</h2>
+        <button type="button" class="modal-close" data-user-form-close aria-label="Fechar">&times;</button>
+      </div>
+
+      <input type="hidden" id="user-id">
+
+      <div class="form-group">
+        <label for="user-name">Nome</label>
+        <input type="text" id="user-name" name="nome" placeholder="Nome completo" required>
+        <small class="field-error" id="user-name-error"></small>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="user-email">Email</label>
+          <input type="email" id="user-email" name="email" placeholder="usuario@email.com" required>
+          <small class="field-error" id="user-email-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="user-phone">Telefone</label>
+          <input type="tel" id="user-phone" name="telefone" placeholder="(11) 99999-9999">
+          <small class="field-error" id="user-phone-error"></small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="user-password" id="user-password-label">Senha</label>
+        <input type="password" id="user-password" name="senha" autocomplete="new-password" placeholder="M&iacute;nimo de 6 caracteres">
+        <small class="field-error" id="user-password-error"></small>
+      </div>
+
+      <div class="booking-modal__actions admin-user-form-actions">
+        <button type="button" class="button button--secondary-soft" data-user-form-close>Cancelar</button>
+        <button type="submit" class="button button--primary admin-user-submit">
+          <span class="button-text">Salvar usu&aacute;rio</span>
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="booking-modal" id="user-view-modal" aria-labelledby="user-view-title">
+    <div class="booking-modal__content">
+      <div class="booking-modal__header">
+        <h2 id="user-view-title">Detalhes do usu&aacute;rio</h2>
+        <button type="button" class="modal-close" data-user-view-close aria-label="Fechar">&times;</button>
+      </div>
+      <dl class="modal-details" id="user-view-content"></dl>
+      <div class="booking-modal__actions">
+        <button type="button" class="button button--secondary-soft" data-user-view-close>Fechar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="booking-modal" id="user-delete-modal" aria-labelledby="user-delete-title">
+    <div class="booking-modal__content">
+      <div class="booking-modal__header">
+        <h2 id="user-delete-title">Excluir usu&aacute;rio</h2>
+        <button type="button" class="modal-close" data-user-delete-close aria-label="Fechar">&times;</button>
+      </div>
+      <p class="modal-question">Deseja realmente excluir este usu&aacute;rio? A exclus&atilde;o n&atilde;o ser&aacute; permitida se houver agendamentos vinculados.</p>
+      <div class="booking-modal__actions">
+        <button type="button" class="button button--secondary-soft" data-user-delete-close>Voltar</button>
+        <button type="button" class="button button--danger" id="confirm-delete-user">Excluir usu&aacute;rio</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="js/api.js"></script>
+  <script src="js/admin-usuarios.js"></script>
+</body>
+</html>

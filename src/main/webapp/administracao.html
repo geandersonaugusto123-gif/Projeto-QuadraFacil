@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Administrativo | QuadraF&aacute;cil</title>
+  <meta name="description" content="Painel administrativo do QuadraFacil para acompanhamento de usuarios, quadras e agendamentos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="admin-page">
+  <aside class="admin-sidebar" aria-label="Menu administrativo">
+    <a class="admin-brand" href="administracao.html" aria-label="QuadraFacil Admin">
+      <span class="admin-brand__mark" aria-hidden="true">QF</span>
+      <span>QuadraF&aacute;cil Admin</span>
+    </a>
+
+    <nav class="admin-menu">
+      <a class="is-active" href="#admin-dashboard">
+        <span aria-hidden="true">D</span>
+        Dashboard
+      </a>
+      <a href="administracao-usuarios.html">
+        <span aria-hidden="true">U</span>
+        Usu&aacute;rios
+      </a>
+      <a href="administracao-quadras.html">
+        <span aria-hidden="true">Q</span>
+        Quadras
+      </a>
+      <a href="administracao-agendamentos.html">
+        <span aria-hidden="true">A</span>
+        Agendamentos
+      </a>
+      <a href="feedback.html">
+        <span aria-hidden="true">F</span>
+        Feedback
+      </a>
+      <button type="button" id="admin-logout">
+        <span aria-hidden="true">S</span>
+        Sair
+      </button>
+    </nav>
+  </aside>
+
+  <main class="admin-main" id="admin-dashboard" aria-labelledby="admin-title">
+    <section class="admin-hero">
+      <div>
+        <p class="eyebrow">Vis&atilde;o administrativa</p>
+        <h1 id="admin-title">Painel administrativo</h1>
+        <p>Acompanhe usu&aacute;rios, quadras e agendamentos do sistema.</p>
+      </div>
+      <div class="admin-user-chip">
+        <span>Administrador</span>
+        <strong id="admin-user-name">Carregando...</strong>
+      </div>
+    </section>
+
+    <div class="dashboard-alert form-alert form-alert--error" id="admin-error" role="status" hidden></div>
+    <div class="dashboard-alert form-alert form-alert--success" id="admin-success" role="status" hidden></div>
+
+    <section class="admin-summary-grid" aria-label="Resumo administrativo">
+      <article class="admin-summary-card">
+        <span>Total de usu&aacute;rios</span>
+        <strong id="admin-total-users">--</strong>
+        <p>Contas cadastradas.</p>
+      </article>
+      <article class="admin-summary-card">
+        <span>Total de quadras</span>
+        <strong id="admin-total-courts">--</strong>
+        <p>Quadras registradas.</p>
+      </article>
+      <article class="admin-summary-card admin-summary-card--warning">
+        <span>Agendamentos pendentes</span>
+        <strong id="admin-pending-bookings">--</strong>
+        <p>Aguardando confirma&ccedil;&atilde;o.</p>
+      </article>
+      <article class="admin-summary-card">
+        <span>Agendamentos confirmados</span>
+        <strong id="admin-confirmed-bookings">--</strong>
+        <p>Reservas ativas.</p>
+      </article>
+      <article class="admin-summary-card admin-summary-card--warning">
+        <span>Quadras em manuten&ccedil;&atilde;o</span>
+        <strong id="admin-maintenance-courts">--</strong>
+        <p>Indispon&iacute;veis para reserva.</p>
+      </article>
+    </section>
+
+    <section class="admin-shortcuts" aria-label="Atalhos administrativos">
+      <a class="admin-shortcut-card" href="administracao-quadras.html?acao=nova">
+        <span aria-hidden="true">+</span>
+        <strong>Cadastrar nova quadra</strong>
+        <small>Abra o formul&aacute;rio de cadastro.</small>
+      </a>
+      <a class="admin-shortcut-card" href="administracao-agendamentos.html">
+        <span aria-hidden="true">A</span>
+        <strong>Gerenciar agendamentos</strong>
+        <small>Veja reservas por status.</small>
+      </a>
+      <a class="admin-shortcut-card" href="administracao-usuarios.html">
+        <span aria-hidden="true">U</span>
+        <strong>Ver usu&aacute;rios</strong>
+        <small>Consulte contas cadastradas.</small>
+      </a>
+    </section>
+
+    <section class="admin-visual-grid" aria-label="Indicadores visuais">
+      <article class="admin-panel">
+        <div class="admin-panel__heading">
+          <div>
+            <p class="eyebrow">Status</p>
+            <h2>Agendamentos por status</h2>
+          </div>
+        </div>
+        <div class="admin-chart" id="admin-status-chart">
+          <p class="admin-empty">Carregando dados...</p>
+        </div>
+      </article>
+
+      <article class="admin-panel">
+        <div class="admin-panel__heading">
+          <div>
+            <p class="eyebrow">Modalidades</p>
+            <h2>Quadras por tipo</h2>
+          </div>
+        </div>
+        <div class="admin-chart" id="admin-court-type-chart">
+          <p class="admin-empty">Carregando dados...</p>
+        </div>
+      </article>
+
+      <article class="admin-panel">
+        <div class="admin-panel__heading">
+          <div>
+            <p class="eyebrow">Agenda</p>
+            <h2>Pr&oacute;ximas reservas</h2>
+          </div>
+        </div>
+        <div class="admin-upcoming-list" id="admin-upcoming-bookings">
+          <p class="admin-empty">Carregando reservas...</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="admin-data-section" id="admin-users" aria-labelledby="admin-users-title">
+      <div class="admin-section-heading">
+        <div>
+          <p class="eyebrow">Cadastro</p>
+          <h2 id="admin-users-title">Usu&aacute;rios</h2>
+        </div>
+        <span id="admin-users-count">--</span>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Telefone</th>
+              <th>Cria&ccedil;&atilde;o</th>
+            </tr>
+          </thead>
+          <tbody id="admin-users-table">
+            <tr><td colspan="5">Carregando usu&aacute;rios...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin-data-section" id="admin-courts" aria-labelledby="admin-courts-title">
+      <div class="admin-section-heading">
+        <div>
+          <p class="eyebrow">Estrutura</p>
+          <h2 id="admin-courts-title">Quadras</h2>
+        </div>
+        <span id="admin-courts-count">--</span>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Tipo</th>
+              <th>Pre&ccedil;o/hora</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="admin-courts-table">
+            <tr><td colspan="5">Carregando quadras...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin-data-section" id="admin-bookings" aria-labelledby="admin-bookings-title">
+      <div class="admin-section-heading">
+        <div>
+          <p class="eyebrow">Reservas</p>
+          <h2 id="admin-bookings-title">Agendamentos</h2>
+        </div>
+        <span id="admin-bookings-count">--</span>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Usu&aacute;rio</th>
+              <th>Quadra</th>
+              <th>Data</th>
+              <th>Hor&aacute;rio</th>
+              <th>Status</th>
+              <th>A&ccedil;&atilde;o</th>
+            </tr>
+          </thead>
+          <tbody id="admin-bookings-table">
+            <tr><td colspan="7">Carregando agendamentos...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/administracao.js"></script>
+</body>
+</html>
