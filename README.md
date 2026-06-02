@@ -6,7 +6,7 @@ Backend Java Web manual para agendamento de quadras esportivas.
 
 - Java Web tradicional
 - Maven
-- GlassFish 4.1 / Java EE 7
+- GlassFish compatível com Jakarta EE / Servlet 6 Jakarta Servlet API 6.0
 - Servlets manuais com `HttpServlet`
 - JDBC manual com `Connection`, `PreparedStatement` e `ResultSet`
 - PostgreSQL
@@ -45,8 +45,9 @@ Se a senha do PostgreSQL local for diferente, altere `db.password`.
 2. Use `File > Open Project`.
 3. Abra a pasta `C:\Users\geand\OneDrive\Documentos\NetBeansProjects\AgendamentoQuadrasBackend`.
 4. Clique com o botao direito no projeto e escolha `Clean and Build`.
-5. Configure o GlassFish como servidor do projeto.
-6. Execute o projeto.
+5. Configure um servidor GlassFish compatível com Jakarta EE / Servlet 6.
+6. Clique com o botão direito no projeto e selecione `Clean and Build`.
+7. Em seguida, execute o projeto.
 
 URL esperada:
 
@@ -196,4 +197,4 @@ Usuarios inseridos pelo script `03_insert_test_data.sql`:
 
 ## Observacao de ambiente
 
-Nesta maquina, o PostgreSQL 17 esta rodando, mas a senha local do usuario `postgres` nao e `postgres`. Por isso os scripts nao foram aplicados automaticamente. Basta executar os scripts pelo pgAdmin usando a senha correta e atualizar o `db.properties`.
+Observação: o arquivo `db.properties` deve ser ajustado de acordo com a senha local do PostgreSQL de quem for executar o projeto. Por segurança, a senha real do ambiente local não deve ser exposta publicamente no repositório.
